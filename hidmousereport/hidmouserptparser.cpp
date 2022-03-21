@@ -1,5 +1,5 @@
-//#include <Mouse2.h>
 #include <Mouse.h>
+#include <Keyboard.h>
 #include "hidmouserptparser.h"
 
 HIDMouseReportParser::HIDMouseReportParser(HIDMouseEvents *evt) : mouEvents(evt), oldButtons(0) {}
@@ -64,7 +64,21 @@ void HIDMouseReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
 }
 
 void HIDMouseEvents::OnButtonDn(uint8_t but_id) {
-  Mouse.press(but_id);
+
+  // for minecraft,  quickly switch weapon for each click
+ if (1 & but_id) {
+   Keyboard.write('2');
+ }
+ else if (2 & but_id) {
+   Keyboard.write('1');
+}  
+ else if (8 & but_id) {
+   Keyboard.write('3');
+} 
+ else if (16 & but_id) {
+   Keyboard.write('4');
+} 
+Mouse.press(but_id);
 }
 
 void HIDMouseEvents::OnButtonUp(uint8_t but_id) {

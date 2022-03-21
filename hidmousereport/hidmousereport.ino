@@ -1,4 +1,5 @@
 #include <Mouse.h>
+#include <Keyboard.h>
 #include <hiduniversal.h>
 #include <SPI.h>
 #include "hidmouserptparser.h"
@@ -10,6 +11,7 @@ HIDMouseReportParser Mou(&MouEvents);
 
 void setup() {
   Mouse.begin();
+  Keyboard.begin();
   Serial.begin(115200);
   Serial.println("Start");
 
