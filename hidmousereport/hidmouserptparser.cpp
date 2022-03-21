@@ -5,21 +5,20 @@
 HIDMouseReportParser::HIDMouseReportParser(HIDMouseEvents *evt) : mouEvents(evt), oldButtons(0) {}
 
 void HIDMouseReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8_t *buf) {
-    /* // see all 8 bits of data
-    for (uint8_t i = 0; i < len; i++) {
-          if(i > 0) Serial.print("\t");
-          Serial.print(buf[i], BIN);
-          Serial.print(",");
-    }
+    // see all 8 bits of data
+    // for (uint8_t i = 0; i < len; i++) {
+    //       if(i > 0) Serial.print("\t");
+    //       Serial.print(buf[i], BIN);
+    //       Serial.print(",");
+    // }
+    // Serial.println("");
+    // for (uint8_t i = 0; i < len; i++) {
+    //       if(i > 0) Serial.print("\t");
+    //       Serial.print(buf[i], DEC);
+    //       Serial.print(",");
+    // }
     Serial.println("");
-    for (uint8_t i = 0; i < len; i++) {
-          if(i > 0) Serial.print("\t");
-          Serial.print(buf[i], DEC);
-          Serial.print(",");
-    }
     Serial.println("");
-    Serial.println("");
-    */
   //but_id 1,2,4,8,16
   
   for (uint8_t but_id = 1; but_id <= 16; but_id <<= 1) {
@@ -40,9 +39,10 @@ void HIDMouseReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
   scr = 0;
   tilt = 0;
   
-  xbrute = buf[2];
-  ybrute = buf[4];
-  scr = buf[6];
+  // NOTE: per mouse settings here. Turn on line 15~19 to see the MouseReport for you mouse
+  xbrute = buf[1];
+  ybrute = buf[3];
+  scr = buf[5];
   tilt = buf[7];
 
   if(xbrute > 127){
