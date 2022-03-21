@@ -7,10 +7,10 @@
   * ~~keyestudio: uno + usb host shield 1.5~~
     * usb host shield works great, signal parsed correctly.
     * But UNO cannot act as `HID`.
-  * Bought another keyestudio `Leonardo`.
-  ```
-    The Leonardo differs from other boards using separate USB-Serial chip in that the ATmega32u4 has built-in USB communication, eliminating the need for a secondary processor. 
-  ```  
+  * Bought another [keyestudio `Leonardo`](https://github.com/wenliang/usb-host-shield-mouse).
+```
+  The Leonardo differs from other boards using separate USB-Serial chip in that the ATmega32u4 has built-in USB communication, eliminating the need for a secondary processor. 
+```  
     * USB host shields must have ICSP. Because Leonardo use ICSP for SPI interface.
   * maybe `teensy 4.0` + `usb hub extension` works. will try next version.
 
