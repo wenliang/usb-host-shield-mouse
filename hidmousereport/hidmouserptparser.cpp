@@ -18,9 +18,9 @@ void HIDMouseReportParser::Parse(USBHID *hid, bool is_rpt_id, uint8_t len, uint8
   //       Serial.print(buf[i], DEC);
   //       Serial.print(",");
   // }
+  Serial.println("");
   // Serial.println("");
-  // Serial.println("");
-  
+
   //but_id 1,2,4,8,16
   for (uint8_t but_id = 1; but_id <= 16; but_id <<= 1) {
     if (buf[0] & but_id) {
@@ -67,19 +67,45 @@ void HIDMouseEvents::OnButtonDn(uint8_t but_id) {
   // for minecraft,  quickly switch weapon for each click
   if (1 & but_id) {
     Keyboard.write('2');
+    Mouse.press(MOUSE_RIGHT);
   } else if (2 & but_id) {
     Keyboard.write('1');
+    for (uint8_t i = 1; i <= 2; i++) {
+      Mouse.click(MOUSE_LEFT);
+      // 20ms does not work. too close.
+      // NOTE: not multi-thread. large number will block movement of mouse below.      
+      // TODO: make it multi-thread?
+      delay(30);    
+    }
+    Mouse.press(MOUSE_LEFT);
+  } else if (4 & but_id) {
+    Keyboard.write('4');
+    Mouse.press(MOUSE_RIGHT);
   } else if (8 & but_id) {
     Keyboard.write('3');
+    Mouse.press(MOUSE_LEFT);
   } else if (16 & but_id) {
-    Keyboard.write('4');
+    Keyboard.write('8');
+    Mouse.press(MOUSE_RIGHT);
   }
-  Mouse.press(but_id);
 }
 
 void HIDMouseEvents::OnButtonUp(uint8_t but_id) {
-  Mouse.release(but_id);
+
+  // for minecraft,  quickly switch weapon for each click
+  if (1 & but_id) {
+    Mouse.release(MOUSE_RIGHT);
+  } else if (2 & but_id) {
+    Mouse.release(MOUSE_LEFT);
+  } else if (4 & but_id) {
+    Mouse.release(MOUSE_RIGHT);
+  } else if (8 & but_id) {
+    Mouse.release(MOUSE_LEFT);
+  } else if (16 & but_id) {
+    Mouse.release(MOUSE_RIGHT);
+  }
 }
+
 
 void HIDMouseEvents::Move(int8_t xm, int8_t ym, int8_t scr, int8_t tilt) {
   /*
